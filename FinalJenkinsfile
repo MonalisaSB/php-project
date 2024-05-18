@@ -10,7 +10,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t monalisasb/myprojectnew:v1 .'
+                    sh 'docker build -t monalisasb/myprojectsimpli:v1 .'
                     sh 'docker images'
                 }
             }
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                     sh "echo $PASS | docker login -u $USER --password-stdin"
-                    sh 'docker push monalisasb/myprojectnew:v1'
+                    sh 'docker push monalisasb/myprojectsimpli:v1'
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
      stage('Deploy') {
             steps {
                 script{
-                        sh 'sudo docker run -itd --name My-project-con -p 8091:80 monalisasb/myprojectnew:v1'
+                        sh 'sudo docker run -itd --name My-project-con1 -p 8091:80 monalisasb/myprojectsimpli:v1'
                     }
                 }
             }
